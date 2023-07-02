@@ -19,7 +19,7 @@ class DefaultConfig(object):
     ngf = 64  # 生成器feature map数
     ndf = 64  # 判别器feature map数
 
-    save_path = 'train_result_imgs/'  # 训练时生成图片保存路径
+    save_path = 'train_img_tmp/'  # 训练时生成图片保存路径
     plot_every = 20  # 每间隔20 batch，visdom画图一次
 
     d_every = 1  # 每1个batch训练一次判别器
