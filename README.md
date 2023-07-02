@@ -1,2 +1,2 @@
 # image-generation
-This is a project that uses GAN to generate images.
+This is an AI project that uses GAN to generate images.
