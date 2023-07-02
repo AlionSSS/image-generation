@@ -1,1 +1,1 @@
-from .dataset import MyDataset
+from .dataset import AnimeFaces128Dataset
