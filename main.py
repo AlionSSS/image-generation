@@ -44,8 +44,8 @@ def train(**kwargs):
 
     # 真图片label为1，假图片label为0
     # noises为生成网络的输入
-    true_labels = torch.ones(opt.batch_size).to(opt.device)
-    fake_labels = torch.zeros(opt.batch_size).to(opt.device)
+    # true_labels = torch.ones(opt.batch_size).to(opt.device)
+    # fake_labels = torch.zeros(opt.batch_size).to(opt.device)
     fix_noises = torch.randn(opt.batch_size, opt.nz, 1, 1).to(opt.device)
     noises = torch.randn(opt.batch_size, opt.nz, 1, 1).to(opt.device)
 
@@ -94,10 +94,9 @@ def _train_epoch(epoch_flag, net_d, net_g, optimizer_d, optimizer_g, dataloader,
             loss_d_fake = (1 + f_r_diff).mean()
             loss_d = loss_d_real + loss_d_fake
 
-            error_d = torch.mean(torch.nn.ReLU()(1 + r_f_diff)) + torch.mean(torch.nn.ReLU()(1 - f_r_diff))
             loss_d.backward()
             optimizer_d.step()
-            error_meter_d.add(error_d.item())
+            error_meter_d.add(loss_d.item())
 
         if i % opt.g_every == 0:
             # 训练生成器
