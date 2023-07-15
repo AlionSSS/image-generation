@@ -24,7 +24,7 @@ class DefaultConfig(object):
     ngf = 64  # 生成器feature map数
     ndf = 64  # 判别器feature map数
 
-    save_path = 'train_img_tmp/'  # 训练时生成图片保存路径
+    train_save_path = 'train_img_tmp/'  # 训练时生成图片保存路径
 
     d_every = 1  # 每1个batch训练一次判别器
     g_every = 2  # 每2个batch训练一次生成器
@@ -35,8 +35,8 @@ class DefaultConfig(object):
     # 测试时所用参数
     gen_img = 'result.png'
     # 从5000张生成的图片中保存最好的64张
-    gen_num = 64
     gen_search_num = 5000
+    gen_num = 64
     gen_mean = 0  # 噪声的均值
     gen_std = 1  # 噪声的方差
 

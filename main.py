@@ -63,9 +63,9 @@ def train(**kwargs):
             with torch.no_grad:
                 # 保存图片、模型
                 fix_fake_imgs = net_g(fix_noises)
-                if not os.path.exists(opt.save_path) or not os.path.isdir(opt.save_path):
-                    os.mkdir(opt.save_path)
-                file_path = os.path.join(opt.save_path, str(epoch) + ".png")
+                if not os.path.exists(opt.train_save_path) or not os.path.isdir(opt.train_save_path):
+                    os.mkdir(opt.train_save_path)
+                file_path = os.path.join(opt.train_save_path, str(epoch) + ".png")
                 torchvision.utils.save_image(fix_fake_imgs.data[:64], file_path, normalize=True, value_range=(-1, 1))
                 net_g.save('GeneratorNet_%s.pth' % epoch)
                 net_d.save('DiscriminatorNet_%s.pth' % epoch)
