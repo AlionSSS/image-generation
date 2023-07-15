@@ -52,12 +52,11 @@ class DiscriminatorNet(BasicModule):
             )
 
         # 输入 3 x 96 x 96
-        self.cnn_block1 = nn.Sequential(nn.Conv2d(3, ndf, 5, 3, 1, bias=False),
-                                        nn.LeakyReLU(0.2, inplace=True))  # 输出 (ndf) x 32 x 32
+        self.cnn_block1 = nn.Sequential(nn.Conv2d(3, ndf, 5, 3, 1, bias=False), nn.LeakyReLU(0.2, inplace=True))  # 输出 (ndf) x 32 x 32
         self.cnn_block2 = cnn_block(ndf, ndf * 2, 4, 2, 1)  # 输出 (ndf*2) x 16 x 16
         self.cnn_block3 = cnn_block(ndf * 2, ndf * 4, 4, 2, 1)  # 输出 (ndf*4) x 8 x 8
         self.cnn_block4 = cnn_block(ndf * 4, ndf * 8, 4, 2, 1)  # 输出 (ndf*8) x 4 x 4
-        self.cnn_block5 = nn.Conv2d(ndf * 8, 1, 4, 1, 0, bias=False)
+        self.cnn_block5 = nn.Conv2d(ndf * 8, 1, 4, 1, 0, bias=False)  # 输出 (ndf*8) x 1
 
     def forward(self, X):
         out = self.cnn_block1(X)
