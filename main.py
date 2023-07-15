@@ -160,9 +160,7 @@ def _get_model():
         net_g.load(opt.netg_path)
     if opt.netd_path:
         net_d.load(opt.netd_path)
-    net_d.to(opt.device)
-    net_g.to(opt.device)
-    return net_g, net_d
+    return net_g.to(opt.device), net_d.to(opt.device)
 
 
 def help():
