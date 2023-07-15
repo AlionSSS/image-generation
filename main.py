@@ -60,16 +60,18 @@ def train(**kwargs):
                      fix_noises, noises, vis)
 
         if epoch % opt.save_every == 0:
-            # 保存模型、图片
-            fix_fake_imgs = net_g(fix_noises)
-            if not os.path.exists(opt.save_path) or not os.path.isdir(opt.save_path):
-                os.mkdir(opt.save_path)
-            torchvision.utils.save_image(fix_fake_imgs.data[:64], '%s/%s.png' % (opt.save_path, epoch), normalize=True,
-                                         value_range=(-1, 1))
-            net_g.save('GeneratorNet_%s.pth' % epoch)
-            net_d.save('DiscriminatorNet_%s.pth' % epoch)
-            error_meter_g.reset()
-            error_meter_d.reset()
+            with torch.no_grad:
+                # 保存图片、模型
+                fix_fake_imgs = net_g(fix_noises)
+                if not os.path.exists(opt.save_path) or not os.path.isdir(opt.save_path):
+                    os.mkdir(opt.save_path)
+                file_path = os.path.join(opt.save_path, str(epoch) + ".png")
+                torchvision.utils.save_image(fix_fake_imgs.data[:64], file_path, normalize=True, value_range=(-1, 1))
+                net_g.save('GeneratorNet_%s.pth' % epoch)
+                net_d.save('DiscriminatorNet_%s.pth' % epoch)
+
+                error_meter_g.reset()
+                error_meter_d.reset()
 
 
 def _train_epoch(epoch_flag, net_d, net_g, optimizer_d, optimizer_g, dataloader, error_meter_d, error_meter_g,
