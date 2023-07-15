@@ -60,7 +60,7 @@ def train(**kwargs):
                      fix_noises, noises, vis)
 
         if epoch % opt.save_every == 0:
-            with torch.no_grad:
+            with torch.no_grad():
                 # 保存图片、模型
                 fix_fake_imgs = net_g(fix_noises)
                 if not os.path.exists(opt.train_save_path) or not os.path.isdir(opt.train_save_path):
