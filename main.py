@@ -88,7 +88,8 @@ def _train_epoch(epoch_flag, net_d, net_g, optimizer_d, optimizer_g, dataloader,
             # 尽可能的把真图片判别为正确，尽可能把假图片判别为错误
             r_preds = net_d(real_img)
             noises.data.copy_(torch.randn(opt.batch_size, opt.nz, 1, 1))
-            fake_img = net_g(noises).detach()  # 现在不训练生成器
+            with torch.no_grad():
+                fake_img = net_g(noises)  # 现在不训练生成器
             f_preds = net_d(fake_img)
 
             # 计算损失
@@ -143,16 +144,17 @@ def generate(**kwargs):
     noises = torch.randn(opt.gen_search_num, opt.nz, 1, 1).normal_(opt.gen_mean, opt.gen_std).to(opt.device)
 
     # 生成图片，并计算图片在判别器的分数
-    fake_img = net_g(noises)
-    scores = net_d(fake_img).detach()
+    with torch.no_grad():
+        fake_img = net_g(noises)
+        scores = net_d(fake_img)
 
-    # 挑选最好的某几张
-    indexs = scores.topk(opt.gen_num)[1]
-    result = []
-    for i in indexs:
-        result.append(fake_img.data[i])
-    # 保存图片
-    torchvision.utils.save_image(torch.stack(result), opt.gen_img, normalize=True, value_range=(-1, 1))
+        # 挑选最好的某几张
+        indexs = scores.topk(opt.gen_num)[1]
+        result = []
+        for i in indexs:
+            result.append(fake_img.data[i])
+        # 保存图片
+        torchvision.utils.save_image(torch.stack(result), opt.gen_img, normalize=True, value_range=(-1, 1))
 
 
 def _get_model():
