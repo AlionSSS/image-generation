@@ -2,7 +2,7 @@
 - This is an AI project that uses GAN to generate images.
 - models 
   - [x] DCGAN
-  - [ ] ResDCGAN(DCGAN + ResidualBlock)
+  - [x] ResDCGAN(DCGAN + ResidualBlock)
   - [ ] xxx
 
 ## Environment
